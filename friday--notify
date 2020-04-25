@@ -1,0 +1,14 @@
+#!/bin/bash
+
+FONT="-*-fira code retina-medium-*-*-*-16-*-*-*-*-*-*-*"
+WIDTH=300
+HEIGHT=50
+
+# This script shows an alert using dzen
+screenWidth=$(xdpyinfo | grep 'dimensions' | egrep -o "[0-9]+x[0-9]+ pixels" | sed "s/x.*//")
+screenHeight=$(xdpyinfo | grep 'dimensions' | egrep -o "[0-9]+x[0-9]+ pixels" | egrep -o "x[0-9]*" | sed "s/x//")
+let "middleY = $screenHeight / 2 - ($HEIGHT/2)"
+let "middleX = $screenWidth / 2 - ($WIDTH/2)"
+
+echo $1 | dzen2 -fn "$FONT" -p $2 -h $HEIGHT
+#echo $1 | dzen2 -fn "$FONT" -p $2 -y $middleY -x $middleX -h $HEIGHT -w $WIDTH &

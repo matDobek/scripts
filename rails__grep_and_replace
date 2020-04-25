@@ -1,0 +1,7 @@
+#!/bin/bash
+
+echo Replacing: $1
+echo With: $2
+grep -lEr $1 ./app ./lib ./spec ./test | xargs sed -i "" "s/$1/$2/g"
+
+#grep -lEr $1 --exclude-dir={.git,log,tmp,vendor} ./ | xargs sed -i "" "s/$1/$2/g"
