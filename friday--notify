@@ -1,14 +1,40 @@
 #!/bin/bash
 
+# This script shows an alert using dzen2
+
 FONT="-*-fira code retina-medium-*-*-*-16-*-*-*-*-*-*-*"
 WIDTH=300
 HEIGHT=50
+BACKGROUND="#030303"
+FOREGROUND="#F8F8F2"
 
-# This script shows an alert using dzen
+function filter_recent {
+  while read data; do
+    proc_start_date=$( echo $data | awk '{ print $3, $4, $5 }' | xargs -I@ date -d @ +%s )
+    min_date=$( date -d "5 sec ago" +%s )
+
+    if [ $proc_start_date -ge $min_date ];
+    then
+      echo $data
+    fi
+  done
+}
+
+#
+# Kill recent notifications
+#
+
+# ps -eo pid,lstart,cmd | grep -v grep | grep dzen2 | filter_recent | awk '{ print $1 }' | xargs kill
+
+#
+# Dispaly notification
+#
+
 screenWidth=$(xdpyinfo | grep 'dimensions' | egrep -o "[0-9]+x[0-9]+ pixels" | sed "s/x.*//")
 screenHeight=$(xdpyinfo | grep 'dimensions' | egrep -o "[0-9]+x[0-9]+ pixels" | egrep -o "x[0-9]*" | sed "s/x//")
+
+let "leftX= $screenWidth - $WIDTH"
 let "middleY = $screenHeight / 2 - ($HEIGHT/2)"
 let "middleX = $screenWidth / 2 - ($WIDTH/2)"
 
-echo $1 | dzen2 -fn "$FONT" -p $2 -h $HEIGHT
-#echo $1 | dzen2 -fn "$FONT" -p $2 -y $middleY -x $middleX -h $HEIGHT -w $WIDTH &
+echo $1 | dzen2 -fn "$FONT" -p $2 -h $HEIGHT -w $WIDTH -y $middleY -x $middleX -bg "$BACKGROUND" -fg "$FOREGROUND" &
