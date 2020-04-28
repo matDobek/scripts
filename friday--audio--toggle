@@ -2,8 +2,8 @@
 
 current_state=$(amixer set Master toggle | grep -Eo "\[on\]")
 
-if [[ $current_state == "[on]" ]]; then
-  amixer get Master | grep -Eo "[0-9]+%" | xargs -I% friday--notify "Volume: %" 1
-else
+if [[ -z $current_state ]]; then
   friday--notify "Volume: OFF" 1
+else
+  amixer get Master | grep -Eo "[0-9]+%" | xargs -I% friday--notify "Volume: %" 1
 fi
