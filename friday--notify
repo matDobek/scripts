@@ -8,24 +8,6 @@ HEIGHT=50
 BACKGROUND="#030303"
 FOREGROUND="#F8F8F2"
 
-function filter_recent {
-  while read data; do
-    proc_start_date=$( echo $data | awk '{ print $3, $4, $5 }' | xargs -I@ date -d @ +%s )
-    min_date=$( date -d "5 sec ago" +%s )
-
-    if [ $proc_start_date -ge $min_date ];
-    then
-      echo $data
-    fi
-  done
-}
-
-#
-# Kill recent notifications
-#
-
-# ps -eo pid,lstart,cmd | grep -v grep | grep dzen2 | filter_recent | awk '{ print $1 }' | xargs kill
-
 #
 # Dispaly notification
 #
