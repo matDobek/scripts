@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # script for running specs in similar manner as rspec
 # minitest - (without args) - will invoke all tests

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 proc_name=$1
 

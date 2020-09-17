@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 amixer set Master unmute
 amixer -q sset Master 2%+
