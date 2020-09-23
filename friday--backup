@@ -2,24 +2,33 @@
 
 mount_point=/media/usb
 mount_device=/dev/sdc1
-backup_path=~/main_archive.tar.gz
-usb_backup_path=/media/usb/main_archive.tar.gz
-dir_to_backup=~/main
-dir_to_backup_size=$(du -sb $dir_to_backup | awk '{print $1}')
+backup_src=~/main
+backup_dest=${mount_point}/main
 
 # Make sure to have sudo priviliges
 sudo echo ""
 
-echo "Archive & compress ~/main"
-echo "===================="
-echo ""
-
-tar cf - $dir_to_backup | pv -s $dir_to_backup_size | gzip > $backup_path
-
-echo "Copy archive to USB drive"
+echo "Backup to USB drive"
 echo "===================="
 echo ""
 
 sudo mount $mount_device $mount_point
-sudo rm -rf $usb_backup_path && sudo rsync --progress $backup_path $usb_backup_path
+
+echo
+echo "Creating archive ..."
+tar cf - ${backup_src} -P \
+  | pv -s $(du -sb ${backup_src} | awk '{print $1}') \
+  | gzip > ~/main_backup.tar.gz
+
+echo
+echo "Cleaning old backup ..."
+time sudo rm -rf ${backup_dest}
+ls ${mount_point}
+
+echo
+echo "Creating backup ..."
+time sudo cp -r $backup_src $backup_dest
+sudo cp ${backup_dest}/projects/_ongoing/dotfiles/format.sh ${mount_point}
+ls ${mount_point}
+
 sudo umount $mount_point
