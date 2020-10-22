@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+cat /home/cr0xd/main/projects/_ongoing/wiki/tldr/$1
