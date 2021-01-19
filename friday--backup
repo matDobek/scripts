@@ -44,7 +44,6 @@ ls ${mount_point}
 echo
 echo "Creating backup ..."
 time sudo cp -r $backup_src $backup_dest
-sudo cp ${backup_dest}/projects/_ongoing/dotfiles/format.sh ${mount_point}
 
 echo
 echo "Directory content:"
