@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+maim --select --hidecursor --nokeyboard --nodecorations=2 | xclip -selection clipboard -t image/png -i
+
