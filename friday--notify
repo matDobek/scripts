@@ -6,7 +6,7 @@ FONT="-*-fira code retina-medium-*-*-*-16-*-*-*-*-*-*-*"
 WIDTH=300
 HEIGHT=50
 BACKGROUND="#feb601"
-FOREGROUND="#030303"
+FOREGROUND="#212121"
 
 #
 # Dispaly notification
